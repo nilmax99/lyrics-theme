@@ -1,0 +1,416 @@
+/*
+  --- Lyrics Theme Snippet (Final Mix v2) ---
+  Shimmer on blockquotes, lift & first-letter on paragraphs.
+*/
+
+/* --- 1. Font & Color Palette --- */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+.lyrics-theme {
+  /* -- Accent Colors -- */
+  --lyrics-accent: #5e72e4;
+  --lyrics-accent-hover: #475ad0;
+  --lyrics-glow: rgba(94, 114, 228, 0.25);
+  --lyrics-highlight-bg: #5ee4d4;
+  --lyrics-code-bg: #1e1e1e;
+
+  /* -- Text Colors -- */
+  --lyrics-text-main: #32325d;
+  --lyrics-text-muted: #8898aa;
+
+  font-family: 'Nunito', sans-serif !important;
+  color: var(--lyrics-text-main) !important;
+}
+
+/* --- Keyframe Animations --- */
+@keyframes fadeInSlideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Paragraphs & Links --- */
+.lyrics-theme p {
+    line-height: 1.7 !important;
+    font-size: 1.1em !important;
+    padding-bottom: 0.5em !important;
+    transition: transform 0.3s ease !important;
+}
+.lyrics-theme p:hover {
+    transform: translateY(-3px) !important;
+}
+/* Animation for the first letter of a paragraph */
+.lyrics-theme p::first-letter {
+    font-weight: bold;
+    color: var(--lyrics-text-main);
+    display: inline-block; /* Important for transform to work correctly */
+    transition: all 0.3s ease-in-out;
+}
+.lyrics-theme p:hover::first-letter {
+    color: var(--lyrics-accent);
+    transform: scale(1.3); /* Use scale instead of font-size */
+}
+
+/* --- Unified Header Animation --- */
+.lyrics-theme h1, .lyrics-theme h2, .lyrics-theme h3, .lyrics-theme h4, .lyrics-theme h5, .lyrics-theme h6 {
+    font-weight: 700 !important;
+    transition: all 0.3s ease-out !important;
+}
+.lyrics-theme h1:hover, .lyrics-theme h2:hover, .lyrics-theme h3:hover, .lyrics-theme h4:hover, .lyrics-theme h5:hover, .lyrics-theme h6:hover {
+    color: var(--lyrics-accent) !important;
+    transform: translateY(-3px) !important;
+    text-shadow: none !important;
+}
+
+/* --- Lists (Unordered & Ordered) --- */
+.lyrics-theme ul > li { position: relative !important; list-style-type: none !important; padding-left: 25px !important; }
+.lyrics-theme ul > li::before { content: '✧' !important; position: absolute !important; left: 0 !important; color: var(--lyrics-accent) !important; font-size: 1.2em !important; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; }
+.lyrics-theme ul > li:hover::before { transform: rotate(360deg) scale(1.5) !important; }
+.lyrics-theme ol { counter-reset: ordered-list-counter; }
+.lyrics-theme ol > li { position: relative; list-style-type: none !important; padding-left: 35px !important; }
+.lyrics-theme ol > li::before { counter-increment: ordered-list-counter; content: counter(ordered-list-counter); position: absolute; left: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--lyrics-accent); color: white; font-weight: bold; font-size: 0.8em; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+.lyrics-theme ol > li:hover::before { transform: scale(1.1) rotate(10deg); }
+
+/* --- Blockquotes with Shimmer Animation --- */
+.lyrics-theme blockquote {
+    border-left: 4px solid var(--lyrics-accent) !important;
+    padding: 15px 20px !important;
+    border-radius: 8px !important;
+    margin: 1.5em 0 !important;
+    background: var(--background-secondary) !important;
+    /* Added for shimmer animation */
+    position: relative;
+    overflow: hidden;
+}
+.lyrics-theme blockquote:hover {
+    /* The hover effect is now the shimmer */
+}
+/* Shimmer animation for blockquotes */
+.lyrics-theme blockquote::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, var(--lyrics-glow) 50%, transparent 100%) !important;
+    transition: left 0.8s ease-in-out !important;
+}
+.lyrics-theme blockquote:hover::before {
+    left: 100%;
+}
+
+
+/* --- Highlight & Tables etc. --- */
+/* NEW: Redesigned Highlight with "Wipe" Animation */
+.lyrics-theme mark {
+    background-color: transparent !important;
+    color: inherit !important;
+    position: relative;
+    z-index: 1;
+    transition: color 0.4s 0.2s ease !important; /* Delay color change */
+}
+/* The animated background block */
+/* NEW: Redesigned Highlight with "Grow" Animation */
+.lyrics-theme mark {
+    color: inherit !important;
+    text-decoration: none;
+    padding-bottom: 2px; /* Space for the underline */
+    background-image: linear-gradient(var(--lyrics-accent), var(--lyrics-accent));
+    background-position: 0% 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 3px; /* Initial state: a 3px thick underline */
+    transition: background-size 0.4s cubic-bezier(0.7, 0, 0.3, 1), color 0.3s ease !important;
+}
+
+.lyrics-theme mark:hover {
+    background-size: 100% 100%; /* Hover state: background grows to full height */
+    color: white !important;
+}
+
+
+.lyrics-theme table { width: 100% !important; border-collapse: separate !important; border-spacing: 0 !important; border: 1px solid var(--background-modifier-border) !important; border-radius: 10px !important; overflow: hidden; }
+.lyrics-theme th { padding: 16px !important; background: var(--background-secondary-alt) !important; font-weight: bold !important; }
+.lyrics-theme td { padding: 16px !important; border: none !important; border-top: 1px solid var(--background-modifier-border) !important; }
+.lyrics-theme tbody tr:nth-child(even) { background-color: var(--background-secondary) !important; }
+.lyrics-theme tbody tr { background-image: linear-gradient(to right, var(--lyrics-accent), var(--lyrics-accent)) !important; background-size: 0% 100% !important; background-repeat: no-repeat; transition: background-size 0.5s ease-out !important; }
+.lyrics-theme tbody tr:hover { background-size: 100% 100% !important; color: white !important; }
+.lyrics-theme img { border-radius: 8px !important; transition: all 0.4s ease-out !important; display: block !important; margin: 20px auto !important; }
+.lyrics-theme img:hover { transform: scale(1.05) translateY(-5px) !important; }
+
+/* --- Dark Mode --- */
+.theme-dark .lyrics-theme {
+  /* Overriding the color palette for dark backgrounds */
+  --lyrics-accent: #7aa2f7; 
+  --lyrics-accent-hover: #9ebaff;
+  --lyrics-glow: rgba(122, 162, 247, 0.3);
+  --lyrics-code-bg: #2c3038;
+
+  /* NEW: Brighter text colors for better readability */
+  --lyrics-text-main: #f5f5f5;
+  --lyrics-text-muted: #b0b0b0;
+}
+
+/* Specific fix for highlight text color in dark mode for better contrast */
+.theme-dark .lyrics-theme mark:hover {
+    color: #1e1e1e !important;
+}
+
+
+
+/* --- NEW: Unified & Animated Link Styling --- */
+
+/* 1. Main style for regular links */
+body .lyrics-theme.lyrics-theme a {
+    position: relative;
+    color: inherit !important;
+    font-weight: normal !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease-in-out !important;
+    opacity: 1 !important; /* Ensure full visibility */
+    filter: none !important;
+}
+
+/* The animated underline for regular links */
+body .lyrics-theme.lyrics-theme a::before {
+    content: '' !important;
+    position: absolute;
+    bottom: -2px; /* Position it slightly below the text */
+    left: 0;
+    width: 100%;
+    height: 2px; /* Thickness of the line */
+    background-color: var(--lyrics-accent) !important;
+    transform: scaleX(0);
+    transform-origin: left; /* Animation starts from the left */
+    transition: transform 0.3s ease-in-out !important;
+}
+
+body .lyrics-theme.lyrics-theme a:hover {
+    color: var(--lyrics-accent) !important;
+}
+
+body .lyrics-theme.lyrics-theme a:hover::before {
+    transform: scaleX(1); /* Animate the line in on hover */
+}
+
+
+
+
+
+
+
+
+
+
+/* --- FINAL: Visible & Animated Sine Wave Underline for Virtual Links --- */
+
+@keyframes sine-wave-anim {
+    to {
+        background-position-x: -40px;
+    }
+}
+
+/* Main Style for Virtual Links */
+body .lyrics-theme.lyrics-theme .virtual-link a {
+    /* Reset */
+    text-decoration: none !important;
+    border: none !important;
+    
+    /* Style */
+    color: inherit !important;
+    padding-bottom: 5px !important;
+    
+    /* The VISIBLE static wave for the normal state (blue for light theme) */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 8'%3e%3cpath d='M 0 5 Q 10 0, 20 5 T 40 5' stroke='%235e72e4' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e");
+    background-repeat: repeat-x;
+    background-size: 40px 8px;
+    background-position: 0 100%;
+    
+    transition: color 0.3s ease !important;
+}
+
+/* Disabling the main link's ::before animation */
+body .lyrics-theme.lyrics-theme .virtual-link a::before {
+    content: none !important;
+}
+
+/* Hover State - Activates the animation */
+body .lyrics-theme.lyrics-theme .virtual-link a:hover {
+    color: var(--lyrics-accent) !important;
+    animation: sine-wave-anim 1.2s linear infinite;
+}
+
+/* Dark Theme adjustment for the initial static wave */
+.theme-dark .lyrics-theme.lyrics-theme .virtual-link a {
+    /* The static wave uses the dark theme's muted color */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 8'%3e%3cpath d='M 0 5 Q 10 0, 20 5 T 40 5' stroke='%23b0b0b0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e");
+}
+
+.theme-dark .lyrics-theme.lyrics-theme .virtual-link a:hover {
+    /* The hover wave uses the dark theme's accent color */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 8'%3e%3cpath d='M 0 5 Q 10 0, 20 5 T 40 5' stroke='%237aa2f7' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e");
+}
+
+
+
+
+
+
+
+/* --- NEW: "Outline Pill" Tag Style --- */
+
+/* This selector is highly specific to win against other extensions */
+body .lyrics-theme.lyrics-theme .tag,
+body .lyrics-theme.lyrics-theme .cm-hashtag {
+    /* Resetting previous styles */
+    background: transparent !important;
+    font-size: 0.85em !important;
+    font-weight: bold !important;
+    vertical-align: middle;
+    
+    /* New Outline Style */
+    color: var(--lyrics-accent) !important;
+    border: 2px solid var(--lyrics-accent) !important;
+    padding: 3px 10px !important;
+    border-radius: 20px !important;
+    
+    transition: all 0.3s ease-in-out !important;
+}
+
+/* Removing the '#' from the ::before pseudo-element */
+body .lyrics-theme.lyrics-theme .tag::before,
+body .lyrics-theme.lyrics-theme .cm-hashtag::before {
+    content: '' !important;
+    margin: 0 !important;
+}
+
+/* Hover State - Fills the background */
+body .lyrics-theme.lyrics-theme .tag:hover,
+body .lyrics-theme.lyrics-theme .cm-hashtag:hover {
+    background-color: var(--lyrics-accent) !important;
+    color: white !important;
+}
+
+
+
+
+
+
+
+
+/* --- FINAL HR: Wavy line with Center Star --- */
+
+@keyframes wave-anim {
+    to {
+        background-position-x: -40px;
+    }
+}
+
+/* Main HR Container */
+.lyrics-theme hr {
+    position: relative;
+    height: 30px;
+    /* background: var(--background-modifier-border); */
+    border: none !important;
+    box-shadow: none !important;
+    margin: 3em 0;
+}
+
+/* The star symbol, always on top */
+.lyrics-theme hr::after {
+    content: '✦';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    /* color: var(--lyrics-accent); */
+    /* color: linear-gradient(45deg, #5e72e4, #9b59b6); */
+    /* color: linear-gradient(#5e72e4, #2980b9); */
+    /* background: transparent; */
+    background: linear-gradient(135deg, #0026ff, #9b59b6);
+    background: white;
+    /* -webkit-background-clip: text; */
+    /* -webkit-text-fill-color: transparent; */
+    padding: 0.01em;
+    border: #1e1e1e00 solid 1px;
+    border-radius: 50%;
+    z-index: 2; /* Highest layer */
+    transition: transform 0.4s ease, transform 0.5s ease-in-out;
+    
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.529);
+}
+
+.lyrics-theme hr:hover::after {
+    /* color: red; */
+    background: linear-gradient(45deg, #e45eae, #b92982);
+    box-shadow: 0 0 0 0px white;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: translate(-50%, -55%) scale(0.8);;
+    opacity: 1;
+}
+
+.theme-dark .lyrics-theme.lyrics-theme hr::after {
+box-shadow: 0 0 0 0px black !important;
+
+background-color:  transparent !important;
+}
+
+/* The animated wave layer, hidden by default */
+.lyrics-theme hr::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* The wave SVG */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 8'%3e%3cpath d='M 0 5 Q 10 0, 20 5 T 40 5' stroke='%235e72e4' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e");
+    background-repeat: repeat-x;
+    background-size: 40px 100%; /* Wave height matches the line height */
+    background-position: center;
+
+    opacity: 1; /* Hidden in normal state */
+    transition: opacity 0.4s ease;
+    z-index: 1; /* Sits below the star */
+}
+
+/* On hover, the wave appears and starts moving */
+.lyrics-theme hr:hover::before {
+    opacity: 1;
+    animation: wave-anim 2.5s linear infinite; /* Slower animation speed */
+}
+
+/* Dark theme adjustments for the wave */
+.theme-dark .lyrics-theme hr::before {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 8'%3e%3cpath d='M 0 5 Q 10 0, 20 5 T 40 5' stroke='%237aa2f7' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e");
+}
+
+
+
+
+
+
+.lyrics-theme.markdown-source-view .cm-line,
+.lyrics-theme.markdown-source-view .cm-header-1,
+.lyrics-theme.markdown-source-view .cm-header-2,
+.lyrics-theme.markdown-source-view .cm-header-3,
+.lyrics-theme.markdown-source-view .cm-header-4,
+.lyrics-theme.markdown-source-view .cm-header-5,
+.lyrics-theme.markdown-source-view .cm-header-6,
+.lyrics-theme.markdown-source-view .cm-quote,
+.lyrics-theme.markdown-source-view .cm-hashtag,
+.lyrics-theme.markdown-source-view .cm-list-1,
+.lyrics-theme.markdown-source-view .cm-list-2,
+.lyrics-theme.markdown-source-view .cm-list-3,
+.lyrics-theme.markdown-source-view .cm-strong,
+.lyrics-theme.markdown-source-view .cm-em,
+.lyrics-theme.markdown-source-view .cm-link,
+.lyrics-theme.markdown-source-view .cm-comment {
+  font-family: 'Nunito', sans-serif !important;
+}
+
+.theme-dark .lyrics-theme.markdown-source-view * {
+  font-family: 'Nunito', sans-serif !important;
+}
